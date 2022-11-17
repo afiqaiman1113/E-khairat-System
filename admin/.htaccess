@@ -1,0 +1,11 @@
+RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}\.php -f
+    RewriteRule ^(.*)$ $1.php
+
+    RewriteRule ^semak-ahli/(\d+)$ semak-ahli-kariah.php?kariah_id=$1 [NC,L]
+    RewriteRule ^bayar/(\d+)$ bayar-tunai-najmi.php?kariah_id=$1 [NC,L]

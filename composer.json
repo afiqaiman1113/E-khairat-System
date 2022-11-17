@@ -1,0 +1,34 @@
+{
+    "name": "syahril/khairat",
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "phpoffice/phpspreadsheet": "^1.23",
+        "clue/graph": "^0.9.3",
+        "graphp/graphviz": "dev-master#5872f6b",
+        "graphp/graph": "dev-master#04461a7",
+        "bartlett/graph-uml": "^1.2",
+        "bartlett/graph-plantuml-generator": "^1.2",
+        "symfony/finder": "^5.3",
+        "symfony/console": "^5.2",
+        "ezyang/htmlpurifier": "^4.16"
+    },
+    "autoload": {
+        "psr-4": {
+            "Syahril\\Khairat\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Syahril Ashraf",
+            "email": "bajuhitam400@gmail.com"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "cweagans/composer-patches": true
+        },
+        "platform": {
+            "php": "7.3"
+        }
+    }
+}
