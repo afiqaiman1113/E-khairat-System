@@ -1,4 +1,5 @@
 <?php
+DATE_DEFAULT_TIMEZONE_SET('Asia/Kuala_Lumpur');
 
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
@@ -13,11 +14,12 @@ if (isset($_GET['date1']) && isset($_GET['date2'])) {
     //remove default header and footer
     $pdf = new TCPDF('P', 'mm', 'A4');
 
+    $tarikhcetak = date("d-m-Y");
 
     $select = $pdo->prepare("SELECT sum(paid) as paid FROM khairat_kematian WHERE tarikh_bayar >= '$date1' AND tarikh_bayar <= '$date2' and status_id = 1 ");
     $select->execute();
     $row = $select->fetch(PDO::FETCH_OBJ);
-    $net_total = $row->paid;
+    $net_total = number_format($row->paid, 2);
 
 
     //remove default header and footer
@@ -29,17 +31,17 @@ if (isset($_GET['date1']) && isset($_GET['date2'])) {
 
     //add content (using cell)
     $pdf->SetFont('Helvetica', '', 14);
-    $pdf->Cell(190, 10, "University of Kuala Lumpur", 0, 1, 'C');
+    $pdf->Cell(190, 10, "Rekod Transaksi Yuran", 0, 1, 'C');
 
-    $pdf->SetFont('Helvetica', '', 8);
-    $pdf->Cell(190, 5, "Student List", 0, 1, 'C');
+    // $pdf->SetFont('Helvetica', '', 8);
+    // $pdf->Cell(190, 5, "Student List", 0, 1, 'C');
 
     $pdf->SetFont('Helvetica', '', 10);
-    $pdf->Cell(30, 5, "Class", 0);
-    $pdf->Cell(160, 5, ":Programming 101", 0);
+    $pdf->Cell(30, 5, "Tarikh Cetak:", 0);
+    $pdf->Cell(160, 5, $tarikhcetak, 0);
     $pdf->Ln();
-    $pdf->Cell(30, 5, "Teacher Name", 0);
-    $pdf->Cell(160, 5, ":Sir Hadi", 0);
+    // $pdf->Cell(30, 5, "Teacher Name", 0);
+    // $pdf->Cell(160, 5, ":Sir Hadi", 0);
     $pdf->Ln();
     $pdf->Ln(2);
 
@@ -72,9 +74,9 @@ if (isset($_GET['date1']) && isset($_GET['date2'])) {
 				<td>" . $row->kariah_ic . "</td>
 				<td>" . $row->kawasan . "</td>
 				<td>" . date('d-m-Y', strtotime($row->tarikh_bayar)) . "</td>
-				<td>" . $row->total . "</td>
-                <td>" . $row->paid . "</td>
-                <td>" . $row->due . "</td>
+				<td>" . number_format($row->total, 2) . "</td>
+                <td>" . number_format($row->paid, 2) . "</td>
+                <td>" . number_format($row->due, 2) . "</td>
 
 
 			</tr>
@@ -121,6 +123,8 @@ table tr th {
     //output
     $pdf->Output();
 } else {
+
+    $tarikhcetak = date("d-m-Y");
     //remove default header and footer
     $pdf = new TCPDF('P', 'mm', 'A4');
 
@@ -134,17 +138,17 @@ table tr th {
 
     //add content (using cell)
     $pdf->SetFont('Helvetica', '', 14);
-    $pdf->Cell(190, 10, "University of Kuala Lumpur", 0, 1, 'C');
+    $pdf->Cell(190, 10, "Rekod Transaksi Yuran", 0, 1, 'C');
 
-    $pdf->SetFont('Helvetica', '', 8);
-    $pdf->Cell(190, 5, "Student List", 0, 1, 'C');
+    // $pdf->SetFont('Helvetica', '', 8);
+    // $pdf->Cell(190, 5, "Student List", 0, 1, 'C');
 
     $pdf->SetFont('Helvetica', '', 10);
-    $pdf->Cell(30, 5, "Class", 0);
-    $pdf->Cell(160, 5, ":Programming 101", 0);
+    $pdf->Cell(30, 5, "Tarikh Cetak:", 0);
+    $pdf->Cell(160, 5, $tarikhcetak, 0);
     $pdf->Ln();
-    $pdf->Cell(30, 5, "Teacher Name", 0);
-    $pdf->Cell(160, 5, ":Sir Hadi", 0);
+    // $pdf->Cell(30, 5, "Teacher Name", 0);
+    // $pdf->Cell(160, 5, ":Sir Hadi", 0);
     $pdf->Ln();
     $pdf->Ln(2);
 
@@ -167,7 +171,7 @@ table tr th {
     $select = $pdo->prepare("SELECT sum(paid) as paid, count(kariah_id) as kariah_id FROM khairat_kematian WHERE status_id = 1");
     $select->execute();
     $row = $select->fetch(PDO::FETCH_OBJ);
-    $net_total = $row->paid;
+    $net_total = number_format($row->paid, 2);
 
     $i = 1;
     //load the json data
@@ -182,9 +186,9 @@ table tr th {
 				<td>" . $row->kariah_ic . "</td>
 				<td>" . $row->kawasan . "</td>
 				<td>" . date('d-m-Y', strtotime($row->tarikh_bayar)) . "</td>
-				<td>" . $row->total . "</td>
-                <td>" . $row->paid . "</td>
-                <td>" . $row->due . "</td>
+				<td>" . number_format($row->total, 2) . "</td>
+                <td>" . number_format($row->paid, 2) . "</td>
+                <td>" . number_format($row->due, 2) . "</td>
 			</tr>
 			";
         $i++;
