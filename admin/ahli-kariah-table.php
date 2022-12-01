@@ -58,8 +58,10 @@ if ($_SESSION['role'] == "Admin") {
 
                 if ($row->mati == "Mati") {
                     echo '<td><a href="semak-tuntutan.php?kariah_id=' . $row->kariah_id . '"><span class="badge bg-danger">Meninggal</span></td>';
-                } else {
+                } elseif ($row->mati == "Hidup") {
                     echo '<td><span class="badge bg-success">Hidup</span></td>';
+                } else {
+                    echo '<td><span class="badge bg-warning">Telah Pindah</span></td>';
                 }
 
                 if (strtotime(date("d-m-Y")) <= strtotime($row->tarikh_expired)) {
@@ -97,6 +99,8 @@ if ($_SESSION['role'] == "Admin") {
                                 <a class="dropdown-item edit_data" href="bayar/<?php echo $row->kariah_id; ?>"><span class="fa fa-money-bill-wave-alt"></span> Bayar Tunai</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item edit_data" href="send-sms.php?kariah_id=<?php echo $row->kariah_id; ?>"><span class="fa fa-sms"></span> Hantar Peringatan</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item edit_data" href="telah-pindah.php?kariah_id=<?php echo $row->kariah_id; ?>"><span class="fa fa-map-marker-alt"></span> Telah Pindah</a>
                                 <div class="dropdown-divider"></div>
 
                             <?php
