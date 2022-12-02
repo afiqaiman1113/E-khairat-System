@@ -5,6 +5,10 @@
 <?php
 include_once 'admin/database/connect.php';
 session_start();
+if (isset($_SESSION['kariah_id']) != "") {
+  header("Location:user.php?p=utama");
+  //exit();
+}
 
 //method kat bawah ni adalah PDO method, jgn gabra2, cer fahamkan dulu code dia
 if (isset($_POST['btn_login'])) {
@@ -299,15 +303,15 @@ if (isset($_POST['btn_login'])) {
     });
 
     $(document).ready(function() {
-        var masks = ["A00000000000", '000000-00-0000'];
-        var options = {
-            onKeyPress: function(cep, e, field, options) {
-                var mask = (cep.length == 12) ? masks[1] : masks[0];
-                $('#kariah_ic').mask(mask, options);
-            }
-        };
+      var masks = ["A00000000000", '000000-00-0000'];
+      var options = {
+        onKeyPress: function(cep, e, field, options) {
+          var mask = (cep.length == 12) ? masks[1] : masks[0];
+          $('#kariah_ic').mask(mask, options);
+        }
+      };
 
-        $('#kariah_ic').mask(masks[1], options);
+      $('#kariah_ic').mask(masks[1], options);
     });
 
     function myFunction() {
@@ -335,6 +339,10 @@ if (isset($_POST['btn_login'])) {
       // =======================================================
       new HSTogglePassword(".js-toggle-password");
     })();
+  </script>
+
+  <script>
+    window.history.forward();
   </script>
 
 
