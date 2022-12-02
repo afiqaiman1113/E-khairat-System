@@ -151,7 +151,7 @@ if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -189,8 +189,10 @@ if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|
                                 ';
                                 if ($row->mati == "Mati") {
                                     echo '<dd class="col-sm-8 text-white"><span class="badge bg-danger">Meninggal</span></dd>';
-                                } else {
+                                } elseif ($row->mati == "Hidup") {
                                     echo '<dd class="col-sm-8 text-white"><span class="badge bg-success">Hidup</span></dd>';
+                                } else {
+                                    echo '<dd class="col-sm-8 text-white"><span class="badge bg-warning">Telah Pindah</span></dd>';
                                 }
 
                                 echo '
@@ -213,6 +215,7 @@ if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|
                                     <a href="bayar.php?kariah_id=' . $row->kariah_id . '" class="btn btn-sm btn-info">
                                         Bayar
                                     </a>
+                                   <button type="button" id=' . $row->kariah_id . ' class="btn btn-sm btn-danger btnpindah">Pindah Kariah</button>
                                     </dt>
 
 
@@ -226,7 +229,7 @@ if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|
                     </div>
                 </div>
 
-                <div class="col-md-7">
+                <div class="col-md-5">
                     <div class="card card">
                         <div class="card-header">
                             <h3 class="card-title">Transaksi Terkini Yang Dilakukan</h3>
@@ -288,6 +291,26 @@ if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|
                                         ?>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card card">
+                        <div class="card-header" style="background-color: #FF0000;">
+                            <h3 class="card-title" style="color:White">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Penting
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert alert-dismissible">
+                                <h5><i class="icon fas fa-ban"></i> Nota!</h5>
+                                <ul>
+                                    <li>Sekiranya anda telah berpindah ke kariah lain, sila klik butang Pindah Kariah untuk mengemaskini status kariah anda</li><br>
+                                    <li>Maklumat pada resit tuntutan tidak boleh dikemaskini setelah melakukan pembayaran</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -409,6 +432,43 @@ if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|
             $('#popup').modal('show');
             sessionStorage.setItem('#popup', true);
         }
+    });
+
+    $(document).on("click", '.btnpindah', function(event) {
+        var tdh = $(this);
+        var id = $(this).attr("id");
+
+        swal({
+                title: "Adakah anda telah berpindah kariah?",
+                // text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+
+                buttons: ["Tidak", "Ya"],
+                //buttons: true,
+                dangerMode: true,
+            })
+            .then((willUpdate) => {
+                if (willUpdate) {
+                    $.ajax({
+                        url: 'pindah-kariah.php',
+                        type: 'post',
+                        data: {
+                            pidd: id
+                        },
+                    })
+                    swal("Kemaskini status kariah berjaya", {
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function() {
+                        window.location = "user.php?p=utama";
+                    });
+                } else {
+                    // swal("Kemaskini status kariah gagal", {
+                    //     icon: "error",
+                    //     button: "Ok",
+                    // });
+                }
+            });
     });
 
     // window.addEventListener("load", function() {

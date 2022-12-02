@@ -100,7 +100,7 @@ if ($_SESSION['role'] == "Admin") {
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item edit_data" href="send-sms.php?kariah_id=<?php echo $row->kariah_id; ?>"><span class="fa fa-sms"></span> Hantar Peringatan</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item edit_data" href="telah-pindah.php?kariah_id=<?php echo $row->kariah_id; ?>"><span class="fa fa-map-marker-alt"></span> Telah Pindah</a>
+                                <a class="dropdown-item edit_data" href="telah-pindah.php?kariah_id=<?php echo $row->kariah_id; ?>"><span class="fa fa-map-marker-alt"></span> Pindah Kariah</a>
                                 <div class="dropdown-divider"></div>
 
                             <?php
