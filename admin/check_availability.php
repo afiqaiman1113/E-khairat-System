@@ -36,7 +36,7 @@ if (!empty($_POST["kariah_ic"])) {
     $select_tel_penama->execute();
 
     if ($select_tel_penama->rowCount() > 0) {
-        echo "<span style='color:red'> No Tel Penama telah </span>";
+        echo "<span style='color:red'> No Tel Penama telah wujud</span>";
         echo "<script>$('#btn_simpan').prop('disabled',true);</script>";
     } else {
         echo "<span style='color:green'> No Tel Boleh Digunakan</span>";
