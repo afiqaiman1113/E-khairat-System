@@ -28,6 +28,6 @@ if (isset($_POST['status'])) {
     $update_kariah->bindParam(':status_id', $status);
     $update_kariah->execute();
 
-  
+
 }
 ?>
