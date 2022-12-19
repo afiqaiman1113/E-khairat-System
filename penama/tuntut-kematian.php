@@ -191,21 +191,23 @@ if ($_SESSION['penama_id'] == true) {
         ?>
         <br>
         <?php
-        if ($penama_id == true && $status_tuntut1 == 'Berjaya') {
-            echo '<script type="text/javascript">
-                    jQuery(function validation() {
-                        swal({
-                            title: "Waris Telah Dituntut",
-                            icon: "error",
-                            button: "Ok",
-                        }).then(function() {
-                            window.location = "penama.php?p=penyata-tuntutan";
-                        });
-                    });
-                </script>';
-        } else {
-            include_once 'form-tuntut.php';
-        }
+        // if ($penama_id == true && $status_tuntut1 == 'Berjaya') {
+        //     echo '<script type="text/javascript">
+        //             jQuery(function validation() {
+        //                 swal({
+        //                     title: "Waris Telah Dituntut",
+        //                     icon: "error",
+        //                     button: "Ok",
+        //                 }).then(function() {
+        //                     window.location = "penama.php?p=penyata-tuntutan";
+        //                 });
+        //             });
+        //         </script>';
+        // } else {
+        //     include_once 'form-tuntut.php';
+        // }
+
+        include_once 'form-tuntut.php';
         ?>
     </div>
     <script>
