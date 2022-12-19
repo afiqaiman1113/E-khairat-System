@@ -71,6 +71,7 @@ if (isset($_POST['btn_simpan'])) {
     $kariah_name = $_POST['kariah_name'];
     $kariah_ic = $_POST['kariah_ic'];
     $user_email = $_POST['user_email'];
+    $kariah_umur = date('Y-m-d', strtotime($_POST['kariah_umur']));
     $jantina = $_POST['jantina'];
     $pekerjaan = $_POST['pekerjaan'];
     $alamat = $_POST['alamat'];
@@ -474,7 +475,7 @@ if ($_SESSION['role'] == "Admin") {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label style="color:red;">* <span style="color:black;">Tarikh Lahir</span></label>
-                                    <input type="text" name="kariah_umur" class="form-control" required="" value="<?php echo $kariah_umur; ?>" oninvalid="this.setCustomValidity('Wajib isi')" oninput="setCustomValidity('')" />
+                                    <input type="date" name="kariah_umur" class="form-control" required="" value="<?php echo $kariah_umur; ?>" oninvalid="this.setCustomValidity('Wajib isi')" oninput="setCustomValidity('')" />
                                 </div>
                             </div>
                         </div>
