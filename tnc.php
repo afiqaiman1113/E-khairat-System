@@ -302,7 +302,7 @@ if (isset($_POST['btn_update_kariah'])) {
                 $insert->execute();
 
                 //config phpmailer
-                if ($penama_email == null) {
+               if ($penama_email == NULL) {
                     $form_data = [
                         'token_uid' => "746210583",
                         'token_key' => "utwe2qsd5r7acgvx8ozi",
