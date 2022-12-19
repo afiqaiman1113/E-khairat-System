@@ -49,6 +49,7 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_email'] = $user['user_email'];
             $_SESSION['role'] = $user['role'];
+            $_SESSION['last_login_timestamp'] = time();
             // $_SESSION['tarikh_daftar'] = $user['tarikh_daftar'];
 
             echo '<script type="text/javascript">

@@ -5,6 +5,19 @@ if ($_SESSION['user_id'] == "" or $_SESSION['role'] == "User") {
     header('Location: index.php');
 }
 
+if (isset($_SESSION['user_id'])) {
+    if ((time() - $_SESSION['last_login_timestamp']) > 60) {
+        header("location:logout.php");
+    } else {
+        $_SESSION['last_login_timestamp'] = time();
+        echo "<h1 align='center'>" . $_SESSION["username"] . "</h1>";
+        echo '<h1 align="center">' . $_SESSION['last_login_timestamp'] . '</h1>';
+        echo "<p align='center'><a href='logout.php'>Logout</a></p>";
+    }
+} else {
+    header('Location: index.php');
+}
+
 $select = $pdo->prepare("SELECT sum(jumlah) as jumlah, count(tid_tanggung) as tid_tanggung FROM tuntut_tanggungan WHERE status = 'Berjaya' ");
 $select->execute();
 $row = $select->fetch(PDO::FETCH_OBJ);
