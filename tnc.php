@@ -302,53 +302,7 @@ if (isset($_POST['btn_update_kariah'])) {
                 $insert->execute();
 
                 //config phpmailer
-                if ($penama_email == null) {
-                    $form_data = [
-                        'token_uid' => "746210583",
-                        'token_key' => "utwe2qsd5r7acgvx8ozi",
-                        'receipients' => $penama_no,
-                        'message' => "Penama Success didaftarkan"
-                    ];
-
-                    $curl = curl_init();
-                    curl_setopt($curl, CURLOPT_POST, 1);
-                    curl_setopt($curl, CURLOPT_URL, 'https://sms.ala.my/api/v1/send');
-                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $form_data);
-                    $result = curl_exec($curl);
-                    $obj = json_decode($result);
-                } else {
-                    $mail = new PHPMailer(true);
-                    try {
-                        //Server settings
-                        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-                        $mail->isSMTP();
-                        $mail->Host       = Config::SMTP_HOST;
-                        $mail->SMTPAuth   = true;
-                        $mail->Username   = 'bajuhitam400@gmail.com';
-                        $mail->Password   = 'iiehxikntcamkegu'; //pass for App, ni cara baru utk bypass send using gmail
-                        $mail->SMTPSecure = 'tls';
-                        $mail->Port       = Config::SMTP_PORT;
-                        $mail->CharSet = 'UTF-8';
-                        $mail->isHTML(true);
-
-                        $mail->setFrom('bajuhitam400@gmail.com', 'Syahril Ashraf');
-                        $mail->addAddress($penama_email);
-
-                        $mail->Subject = 'Pendaftaran Penama Berjaya';
-
-                        $mail->Body = "<p>$penama_name berjaya didaftarkan sebagai penama kepada $kariah_name</p>";
-                        $mail->send();
-
-                        // if ($mail->send()) {
-                        //   $emailSent = true;
-                        // } else {
-                        //   echo "not sent";
-                        // }
-                    } catch (Exception $e) {
-                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                    }
-                }
+               
             }
 
             echo '<script type="text/javascript">
