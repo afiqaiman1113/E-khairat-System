@@ -5,6 +5,10 @@
 <?php
 include_once 'admin/database/connect.php';
 session_start();
+if (isset($_SESSION['kariah_id']) != "") {
+  header("Location:user.php?p=utama");
+  //exit();
+}
 
 //method kat bawah ni adalah PDO method, jgn gabra2, cer fahamkan dulu code dia
 if (isset($_POST['btn_login'])) {
@@ -72,12 +76,23 @@ if (isset($_POST['btn_login'])) {
         });
         </script>';
     header('refresh:2;penama/penama.php?p=utama1');
+  } elseif ($penama > 0 && password_verify($password, $penama['penama_pass']) != $password) {
+    echo '<script type="text/javascript">
+        jQuery(function validation() {
+            swal({
+                title: "Kata Laluan Salah",
+                text: "No K/P Penama Wujud Dalam Rekod",
+                icon: "error",
+                button: "Ok",
+              });
+        });
+        </script>';
   } elseif ($user > 0 && password_verify($password, $user['password']) != $password) {
     echo '<script type="text/javascript">
         jQuery(function validation() {
             swal({
                 title: "Kata Laluan Salah",
-                text: "No K/P Wujud Dalam Rekod",
+                text: "No K/P Ahli Wujud Dalam Rekod",
                 icon: "error",
                 button: "Ok",
               });
@@ -87,7 +102,8 @@ if (isset($_POST['btn_login'])) {
     echo '<script type="text/javascript">
         jQuery(function validation() {
             swal({
-                title: "No K/P Belum Berdaftar",
+                title: "Rekod Tidak Wujud",
+                text: "Sila Daftar",
                 icon: "error",
                 button: "Ok",
               });
@@ -114,7 +130,7 @@ if (isset($_POST['btn_login'])) {
   <!-- Favicon -->
   <link rel="shortcut icon" href="admin/dist/img/logo.png">
   <!-- Google Fonts -->
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <!-- CSS Global Compulsory -->
   <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="assets/vendor/icon-awesome/css/font-awesome.min.css">
@@ -126,135 +142,124 @@ if (isset($_POST['btn_login'])) {
   <link rel="stylesheet" href="assets/css/unify-core.css">
   <link rel="stylesheet" href="assets/css/unify-components.css">
   <link rel="stylesheet" href="assets/css/unify-globals.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/font/bootstrap-icons.css" />
 
   <!-- CSS Customization -->
   <link rel="stylesheet" href="assets/css/custom.css">
+  <link rel="stylesheet" href="assets/css/theme.min.css" />
 </head>
 
-<body>
-  <main>
+<body class="d-flex align-items-center min-h-100 bg-dark">
+  <main id="content" role="main" class="flex-grow-1 overflow-hidden">
+    <div class="container content-space-t-1 content-space-b-2">
+      <div class="mx-lg-auto" style="max-width: 55rem">
+        <div class="d-flex justify-content-center align-items-center flex-column min-vh-lg-100">
 
-    <!-- Header -->
-    <header id="js-header" class="u-header u-header--static">
-      <div class="u-header__section u-header__section--light g-bg-white g-transition-0_3 g-py-10">
-        <nav class="js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal">
-          <div class="container">
+          <!-- Header -->
 
-            <?php
-            $useragent = $_SERVER['HTTP_USER_AGENT'];
-            if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent) || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i', substr($useragent, 0, 4))) {
-              echo '
-                <a href="index.php" class="navbar-brand d-flex">
-                  <center>
-                   <img src="ntah.png" width="65%"  />
-                  </center>
-                </a>
-                 ';
-            } else {
-              echo '
-                <a href="index.php" class="navbar-brand d-flex">
-                  <img src="ntah.png" width="70%"  />
-                </a>
-                ';
-            }
-            ?>
 
-            <?php
-            if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent) || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i', substr($useragent, 0, 4))) {
-              echo '
-              <div class="d-inline-block g-pl-0--lg" style="margin:0 auto;">
-                <a class="
-                  btn
-                  u-btn-outline-primary
-                  g-font-size-13
-                  text-uppercase
-                  g-py-10 g-px-15
-                  " href="daftar.php">Daftar</a>&nbsp&nbsp&nbsp
-                <a class="
-                  btn
-                  u-btn-outline-primary
-                  g-font-size-13
-                  text-uppercase
-                  g-py-10 g-px-15
-                  " href="log-masuk-backup.php">Log Masuk</a>
-              </div>
-              ';
-            } else {
-              echo '
-              <div class="d-inline-block g-pl-0--lg">
-                <a class="
-                  btn
-                  u-btn-outline-primary
-                  g-font-size-13
-                  text-uppercase
-                  g-py-10 g-px-15
-                  " href="daftar.php">Daftar</a>&nbsp&nbsp&nbsp
-                <a class="
-                  btn
-                  u-btn-outline-primary
-                  g-font-size-13
-                  text-uppercase
-                  g-py-10 g-px-15
-                  " href="log-masuk-backup.php">Log Masuk</a>
-              </div>
-              ';
-            }
-            ?>
+          <a class="navbar-brand mx-auto" href="/khairat">
+            <img src="admin/dist/img/logo.png" alt="Image Description" width="110" />
+          </a>
 
-          </div>
-        </nav>
-      </div>
-    </header>
-    <!-- End Header -->
 
-    <!-- Login -->
-    <section class="container g-py-40">
-      <div class="row justify-content-center">
-        <div class="col-sm-8 col-lg-5">
-          <div class="g-brd-around g-brd-gray-light-v4 rounded g-py-40 g-px-30">
-            <header class="text-center mb-4">
-              <h2 class="h2 g-color-black g-font-weight-600">Log Masuk</h2>
-            </header>
+          <!-- End Header -->
 
-            <!-- Form -->
-            <form class="g-py-15" action="log-masuk-backup.php" method="post">
-              <div class="mb-4">
-                <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" name="kariah_ic" id="kariah_ic" placeholder="No Kad Pengenalan" required="" oninvalid="this.setCustomValidity('Wajib Isi')" oninput="setCustomValidity('')">
-              </div>
-              <div class="g-mb-35">
-                <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15 mb-3" type="password" name="password" id="password" placeholder="Kata Laluan" required="" oninvalid="this.setCustomValidity('Masukkan Kata Laluan')" oninput="setCustomValidity('')">
-                <div class="row justify-content-between">
-                  <div class="col align-self-center">
-                    <label class="form-check-inline u-check g-color-gray-dark-v5 g-font-size-12 g-pl-25 mb-0">
-                      <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" id="lihat" onclick="myFunction()">
-                      <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
-                        <i class="fa" data-check-icon="&#xf00c"></i>
+          <!-- Login -->
+          <div class="position-relative">
+            <!-- Card -->
+            <div class="card card-shadow card-login">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <!-- Form -->
+                    <form class="g-py-15" action="log-masuk.php" method="post">
+                      <div class="text-center">
+                        <div class="mb-5">
+                          <h3 class="card-title">Log Masuk</h3>
+                        </div>
                       </div>
-                      Lihat Kata Laluan
-                    </label>
-                  </div>
-                  <div class="col align-self-center text-right">
-                    <a class="g-font-size-12" href="set-semula.php?forgot=<?php echo uniqid(true); ?>">Lupa Kata Laluan?</a>
+
+                      <!-- Form -->
+                      <div class="mb-4">
+                        <label class="form-label" for="kariah_ic">No Kad Pengenalan / No Pasport</label>
+                        <?php $kariah_ic = !empty($_POST['kariah_ic']) ? trim($_POST['kariah_ic']) : null; ?>
+                        <input type="text" class="form-control form-control-lg" name="kariah_ic" id="kariah_ic" value="<?php echo $kariah_ic; ?>" tabindex="1" placeholder="No Kad Pengenalan / No Pasport" aria-label="No Kad Pengenalan / No Pasport" required="" oninvalid="this.setCustomValidity('Wajib Isi')" oninput="setCustomValidity('')" />
+                        <span class="invalid-feedback">Sila isi format NRIC yang betul</span>
+                      </div>
+                      <!-- End Form -->
+
+                      <!-- Form -->
+                      <div class="mb-4">
+                        <label class="form-label" for="signupSrPassword" tabindex="0">Kata Laluan</label>
+                        <div class="input-group-merge">
+                          <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="password" placeholder="Kata Laluan" aria-label="Kata Laluan" required="" oninvalid="this.setCustomValidity('Masukkan Kata Laluan')" oninput="setCustomValidity('')" data-hs-toggle-password-options='{
+                                   "target": "#changePassTarget",
+                                   "defaultClass": "bi-eye-slash",
+                                   "showClass": "bi-eye",
+                                   "classChangeTarget": "#changePassIcon"
+                                 }' />
+                          <a id="changePassTarget" class="input-group-append input-group-text" href="javascript:;">
+                            <i id="changePassIcon" class="bi-eye"></i>
+                          </a>
+
+                          <span class="invalid-feedback">Sila masukkan kata laluan yang betul</span>
+                        </div>
+                      </div>
+                      <!-- End Form -->
+
+                      <div class="d-flex justify-content-end mb-4">
+                        <a class="form-label-link" href="set-semula.php?forgot=<?php echo uniqid(true); ?>">Lupa kata laluan?</a>
+                      </div>
+
+                      <div class="d-grid gap-4">
+                        <button type="submit" name="btn_login" class="btn btn-primary btn-lg">
+                          Log Masuk
+                        </button>
+                        <p class="card-text text-muted">
+                          Belum Daftar?
+                          <a class="link" href="daftar">Daftar Sini</a>
+                        </p>
+                      </div>
+                    </form>
+                    <!-- End Form -->
                   </div>
                 </div>
-              </div>
+                <!-- End Col -->
 
-              <div class="mb-4">
-                <button class="btn btn-md btn-block u-btn-primary g-rounded-50 g-py-13" type="submit" name="btn_login">Log Masuk</button>
+                <div class="col-md-4 d-md-flex justify-content-center flex-column bg-soft-primary p-8 p-md-5" style="
+                      background-image: url(img/wave-pattern.svg);
+                    ">
+                  <h5 class="mb-4">Peringatan sebelum log masuk:</h5>
+                  <!-- List Checked -->
+                  <ul class="list-checked list-checked-primary list-py-2">
+                    <li class="list-checked-item">Pastikan mengikut format NRIC yang telah ditetapkan</li>
+                    <li class="list-checked-item">Pastikan rekod anda telah berdaftar</li>
+                  </ul>
+                  <!-- End List Checked -->
+                </div>
+                <!-- End Col -->
               </div>
-            </form>
-            <!-- End Form -->
+              <!-- End Row -->
+            </div>
+            <!-- End Card -->
 
-            <footer class="text-center">
-              <p class="g-color-gray-dark-v5 g-font-size-13 mb-0">Belum Daftar? <a class="g-font-weight-600" href="daftar.php">Daftar Sini</a>
-              </p>
-            </footer>
+            <!-- SVG Shape -->
+            <figure class="position-absolute top-0 end-0 zi-n1 d-none d-sm-block mt-n7 me-n10" style="width: 4rem">
+              <img class="img-fluid" src="img/pointer-up.svg" alt="Image Description" />
+            </figure>
+            <!-- End SVG Shape -->
+
+            <!-- SVG Shape -->
+            <figure class="position-absolute bottom-0 start-0 d-none d-sm-block ms-n10 mb-n10" style="width: 15rem">
+              <img class="img-fluid" src="img/curved-shape.svg" alt="Image Description" />
+            </figure>
+            <!-- End SVG Shape -->
           </div>
+          <!-- End Login -->
         </div>
       </div>
-    </section>
-    <!-- End Login -->
-
+    </div>
   </main>
 
   <div class="u-outer-spaces-helper"></div>
@@ -264,16 +269,19 @@ if (isset($_POST['btn_login'])) {
   <script src="assets/vendor/popper.js/popper.min.js"></script>
   <script src="assets/vendor/bootstrap/bootstrap.min.js"></script>
   <script src="assets/js/jquery.mask.min.js"></script>
+  <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 
   <!-- JS Implementing Plugins -->
   <script src="assets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+  <script src="assets/vendor/hs-toggle-password/dist/js/hs-toggle-password.js"></script>
 
   <!-- JS Unify -->
   <script src="assets/js/hs.core.js"></script>
   <script src="assets/js/components/hs.header.js"></script>
   <script src="assets/js/components/hs.tabs.js"></script>
   <script src="assets/js/components/hs.go-to.js"></script>
+  <script src="assets/js/theme.min.js"></script>
 
   <!-- JS Customization -->
   <script src="assets/js/custom.js"></script>
@@ -295,7 +303,15 @@ if (isset($_POST['btn_login'])) {
     });
 
     $(document).ready(function() {
-      $('#kariah_ic').mask('000000-00-0000');
+      var masks = ["A00000000000", '000000-00-0000'];
+      var options = {
+        onKeyPress: function(cep, e, field, options) {
+          var mask = (cep.length == 12) ? masks[1] : masks[0];
+          $('#kariah_ic').mask(mask, options);
+        }
+      };
+
+      $('#kariah_ic').mask(masks[1], options);
     });
 
     function myFunction() {
@@ -307,6 +323,29 @@ if (isset($_POST['btn_login'])) {
       }
     }
   </script>
+
+  <script>
+    (function() {
+      // INITIALIZATION OF BOOTSTRAP VALIDATION
+      // =======================================================
+      HSBsValidation.init(".js-validate", {
+        onSubmit: (data) => {
+          data.event.preventDefault();
+          alert("Submited");
+        },
+      });
+
+      // INITIALIZATION OF TOGGLE PASSWORD
+      // =======================================================
+      new HSTogglePassword(".js-toggle-password");
+    })();
+  </script>
+
+  <script>
+    window.history.forward();
+  </script>
+
+
 
   <div id="resolutionCaution" class="text-left g-max-width-600 g-bg-white g-pa-20" style="display: none;">
     <button type="button" class="close" onclick="Custombox.modal.close();">
