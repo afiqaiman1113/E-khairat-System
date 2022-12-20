@@ -437,12 +437,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="/khairat/admin/log-aktiviti" class="nav-link">
-                                <i class="nav-icon fas fa-history"></i>
-                                <p>Log Aktiviti</p>
-                            </a>
-                        </li>
+                       
                         <!-- <li class="nav-item">
                             <a href="logout.php" class="nav-link">
                                 <i class="nav-icon fas fa-power-off"></i>
