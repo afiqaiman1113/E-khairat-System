@@ -211,7 +211,12 @@ if (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|
                                     <dd class="col-sm-8">' . $row->kawasan . '</dd>
                                     <br><br>
 
-                                   
+                                    <dt class="col-sm-4">
+                                    <a href="bayar.php?kariah_id=' . $row->kariah_id . '" class="btn btn-sm btn-info">
+                                        Bayar
+                                    </a>
+                                   <button type="button" id=' . $row->kariah_id . ' class="btn btn-sm btn-danger btnpindah">Pindah Kariah</button>
+                                    </dt>
 
 
                                     ';
