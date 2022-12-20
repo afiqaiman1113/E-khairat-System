@@ -16,12 +16,12 @@ include_once 'admin/database/connect.php';
                         <p>Papan Utama</p>
                     </a>
                 </li>
-                <!-- <li id="" class="nav-item">
+                <li id="" class="nav-item">
                     <a href="logout.php">
                         <i class="fas fa-sign-out-alt"></i>
                         <p>Logout/Keluar</p>
                     </a>
-                </li> -->
+                </li>
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
