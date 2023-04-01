@@ -172,9 +172,9 @@ if (isset($_POST['btn_tuntut'])) {
                       });
                 });
                 </script>';
-        $sql = "DELETE FROM tbl_tanggung WHERE id = $id_tanggungan ";
-        $update = $pdo->prepare($sql);
-        $update->execute();
+        // $sql = "DELETE FROM tbl_tanggung WHERE id = $id_tanggungan ";
+        // $update = $pdo->prepare($sql);
+        // $update->execute();
     } else {
         echo '<script type="text/javascript">
                 jQuery(function validation() {
@@ -238,7 +238,8 @@ if ($_SESSION['role'] == "Admin") {
                                 $no_cek = $_POST['no_cek'];
                                 $nota = $_POST['nota'];
                                 ?>
-                                <td><select class="form-control id_tanggungan" name="id_tanggungan" required="" oninvalid="this.setCustomValidity('Sila Pilih')" oninput="setCustomValidity('')" style="width: 250px" ;>
+                                <td>
+                                    <select class="form-control id_tanggungan" name="id_tanggungan" required="" oninvalid="this.setCustomValidity('Sila Pilih')" oninput="setCustomValidity('')" style="width: 250px" ;>
                                         <option value="" disabled selected>Pilih Tanggungan</option>
                                         <?php
                                         if (tunggak($pdo) == true) {
@@ -248,7 +249,8 @@ if ($_SESSION['role'] == "Admin") {
                                         }
 
                                         ?>
-                                    </select></td>
+                                    </select>
+                                </td>
                                 <input type="hidden" class="form-control id" name="id" readonly>
                                 <br>
                                 <div class="row">

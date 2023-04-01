@@ -5,6 +5,23 @@ if ($_SESSION['user_id'] == "" or $_SESSION['role'] == "User") {
     header('Location: index.php');
 }
 
+// if (isset($_SESSION['user_id'])) {
+//     if ((time() - $_SESSION['last_login_timestamp']) > 60) {
+//         echo '<script type="text/javascript">
+//         alert("Alert");
+//         </script>';
+//         header("Location: logout.php");
+
+//     } else {
+//         $_SESSION['last_login_timestamp'] = time();
+//         // echo "<h1 align='center'>" . $_SESSION["username"] . "</h1>";
+//         echo '<h1 align="center">Session timeout: ' . $_SESSION['last_login_timestamp'] . '</h1>';
+//         // echo "<p align='center'><a href='logout.php'>Logout</a></p>";
+//     }
+// } else {
+//     header('Location: index.php');
+// }
+
 $select = $pdo->prepare("SELECT sum(jumlah) as jumlah, count(tid_tanggung) as tid_tanggung FROM tuntut_tanggungan WHERE status = 'Berjaya' ");
 $select->execute();
 $row = $select->fetch(PDO::FETCH_OBJ);
@@ -47,6 +64,30 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 
 include_once 'header.php';
 ?>
+
+<!-- <div class="modal fade" id="logout_popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div style="width:100%;height:100%;margin: 0px; padding:0px">
+                    <div style="width:25%;margin: 0px; padding:0px;float:left;">
+                        <i class="fa fa-warning" style="font-size: 140px;color:#da4f49"></i>
+                    </div>
+                    <div style="width:70%;margin: 0px; padding:0px;float:right;padding-top: 10px;padding-left: 3%;">
+                        <h4>Your session is about to expire!</h4>
+                        <p style="font-size: 15px;">You will be logged out in <span id="timer" style="display: inline;font-size: 30px;font-style: bold">10</span> seconds.</p>
+                        <p style="font-size: 15px;">Do you want to stay signed in?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div style="margin-left: 30%;margin-bottom: 20px;margin-top: 20px;">
+                <a href="javascript:;" onclick="resetTimer()" class="btn btn-primary" aria-hidden="true">Ya, kekalkan</a>
+                <a href="logout.php" class="btn btn-danger" aria-hidden="true">Tak, log keluar</a>
+            </div>
+        </div>
+    </div>
+</div> -->
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -254,6 +295,48 @@ include_once 'header.php';
             }
         }
     });
+
+    // var c = 0;
+    // max_count = 10;
+    // logout = true;
+    // startTimer();
+
+    // function startTimer() {
+    //     setTimeout(function() {
+    //         logout = true;
+    //         c = 0;
+    //         max_count = 10;
+    //         $('#timer').html(max_count);
+    //         $('#logout_popup').modal('show');
+    //         startCount();
+
+    //     }, 60000);
+    // }
+
+    // function resetTimer() {
+    //     logout = false;
+    //     $('#logout_popup').modal('hide');
+    //     startTimer();
+    // }
+
+    // function timedCount() {
+    //     c = c + 1;
+    //     remaining_time = max_count - c;
+    //     if (remaining_time == 0 && logout) {
+    //         $('#logout_popup').modal('hide');
+    //         location.href = 'logout.php';
+
+    //     } else {
+    //         $('#timer').html(remaining_time);
+    //         t = setTimeout(function() {
+    //             timedCount()
+    //         }, 1000);
+    //     }
+    // }
+
+    // function startCount() {
+    //     timedCount();
+    // }
 
 
     // $(document).ready(function() {

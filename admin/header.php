@@ -298,6 +298,12 @@
                                         <p style="font-size:90%;">Lihat Semua Ahli</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="/khairat/admin/ahli-kariah-serverside" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p style="font-size:90%;">Ahli Serverside</p>
+                                    </a>
+                                </li>
                                 <!-- <li class="nav-item">
                                     <a href="meninggal-dunia.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

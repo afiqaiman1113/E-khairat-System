@@ -154,18 +154,20 @@ if (isset($_POST['btn_update_kariah'])) {
               });
         });
         </script>';
-    } elseif ($email_penama->rowCount() > 0) {
-        echo '<script type="text/javascript">
-        jQuery(function validation() {
-            swal({
-                title: "Emel penama telah berdaftar",
-                text: "Sila masukkan emel lain",
-                icon: "warning",
-                button: "Ok",
-              });
-        });
-        </script>';
-    } elseif ($penama_ic == $kariah_ic) {
+    }
+    // elseif ($email_penama->rowCount() > 0) {
+    //     echo '<script type="text/javascript">
+    //     jQuery(function validation() {
+    //         swal({
+    //             title: "Emel penama telah berdaftar",
+    //             text: "Sila masukkan emel lain",
+    //             icon: "warning",
+    //             button: "Ok",
+    //           });
+    //     });
+    //     </script>';
+    // }
+    elseif ($penama_ic == $kariah_ic) {
         echo '<script type="text/javascript">
         jQuery(function validation() {
             swal({

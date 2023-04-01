@@ -1,16 +1,17 @@
 <?php
 $nilai = $_GET['nilai'];
 // Database connection info
-$dbDetails = array(
+$dbDetails = [
     'host' => 'localhost',
     'user' => 'root',
     'pass' => '',
     'db'   => 'khairat'
-);
+];
+
+$pdo = new PDO("mysql:host=" . $dbDetails['host'] . ";dbname=" . $dbDetails['db'], $dbDetails['user'], $dbDetails['pass']);
 
 function displayYuranName($products, $pdo)
 {
-    include_once 'database/connect.php';
     $string = [];
     $array = explode(",", $products);
 
@@ -25,6 +26,7 @@ function displayYuranName($products, $pdo)
 
     return implode(", ", $string);
 }
+
 
 
 // DB table to use
@@ -62,90 +64,69 @@ EOT;
 // Table's primary key
 $primaryKey = 'khairat_id';
 
-// Array of database columns which should be read and sent back to DataTables.
-// The `db` parameter represents the column name in the database.
-// The `dt` parameter represents the DataTables column identifier.
-$columns = array(
-    array('db' => 'khairat_id', 'dt' => 0),
-    array(
+$columns = [
+    ['db' => 'khairat_id', 'dt' => 0],
+    [
         'db'        => 'kariah_name',
         'dt'        => 1,
         'formatter' => function ($d, $row) {
             return strtoupper($d);
         }
-    ),
+    ],
+    [
+        'db'        => 'product_id',
+        'dt'        => 2,
+        'formatter' => function ($d, $row) use ($pdo) {
+            return displayYuranName($d, $pdo);
+        },
+    ],
 
-    array('db' => 'product_name', 'dt' => 2),
-
-    // array(
-    //     'db'        => 'product_id',
-    //     'dt'        => 2,
-    //     'formatter' => function ($d, $pdo) {
-    //         return displayYuranName($d, $pdo);
-    //     },
-    // ),
-    array(
+    [
         'db'        => 'tarikh_bayar',
         'dt'        => 3,
         'formatter' => function ($d, $row) {
             return date('d-m-Y', strtotime($d));
         }
-    ),
-    array(
+    ],
+    [
         'db'        => 'total',
         'dt'        => 4,
         'formatter' => function ($d, $row) {
             return number_format($d, 2);
         }
-    ),
-    array(
+    ],
+    [
         'db'        => 'paid',
         'dt'        => 5,
         'formatter' => function ($d, $row) {
             return number_format($d, 2);
         }
-    ),
-    array(
+    ],
+    [
         'db'        => 'due',
         'dt'        => 6,
         'formatter' => function ($d, $row) {
             return number_format($d, 2);
         }
-    ),
-    array('db' => 'kariah_ic',     'dt' => 7),
-    array('db' => 'kawasan',     'dt' => 8),
-    array(
+    ],
+    ['db' => 'kariah_ic',     'dt' => 7],
+    ['db' => 'kawasan',     'dt' => 8],
+    [
         'db'        => 'expired',
         'dt'        => 9,
         'formatter' => function ($d, $row) {
             return date('d-m-Y', strtotime($d));
         }
-    ),
-    array('db' => 'p_method',     'dt' => 10),
-    array('db' => 'invoice_no',     'dt' => 11),
-    array('db' => 'approvement',     'dt' => 12),
-    // array('db' => 'country',    'dt' => 4),
-    // array(
-    //     'db'        => 'created',
-    //     'dt'        => 5,
-    //     'formatter' => function ($d, $row) {
-    //         return date('jS M Y', strtotime($d));
-    //     }
-    // ),
-    // array(
-    //     'db'        => 'status',
-    //     'dt'        => 6,
-    //     'formatter' => function ($d, $row) {
-    //         return ($d == 1) ? 'Active' : 'Inactive';
-    //     }
-    // ),
-
-);
+    ],
+    ['db' => 'p_method',     'dt' => 10],
+    ['db' => 'invoice_no',     'dt' => 11],
+    ['db' => 'approvement',     'dt' => 12],
+];
 
 // Include SQL query processing class
 require 'ssp.class.php';
 
 // Output data as json format
 echo json_encode(
-    SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns, null, "kariah_id = $nilai")
+    SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns, $pdo)
 );

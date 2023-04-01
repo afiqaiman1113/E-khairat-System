@@ -106,13 +106,6 @@ if ($_SESSION['role'] == "Admin") {
                             <?php
                             }
                             ?>
-                            <!-- <div class="dropdown-divider"></div>
-                            <a href="#add_<?php //echo $row->kariah_id;
-                                            ?>" class="dropdown-item view_data" data-toggle="modal"><span class="fa fa-eye text-dark"></span> Tambah Penama</a> -->
-
-                            <!-- <a class="dropdown-item edit_data" href="tambah-penama.php?kariah_id=<?php //echo $row->kariah_id;
-                                                                                                        ?>"><span class="fa fa-edit text-primary"></span> Penama</a>
-                            <div class="dropdown-divider"></div> -->
                             <?php
                             if ($row->mati == "Mati") {
                             } else {

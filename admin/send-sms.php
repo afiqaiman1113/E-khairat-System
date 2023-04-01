@@ -7,17 +7,18 @@ $select = $pdo->prepare("SELECT * FROM ahli_kariah WHERE kariah_id = $id");
 $select->execute();
 $row = $select->fetch(PDO::FETCH_ASSOC);
 $tel_hp = $row['tel_hp'];
+$phone = '+60' . substr($tel_hp, 1);
 
 $form_data = [
-    'token_uid' => "746210583",
-    'token_key' => "utwe2qsd5r7acgvx8ozi",
-    'receipients' => $tel_hp,
-    'message' => "Renew Plz"
+    '_token' => 't3CxcVmx0hw2gGfLQOOANunJQ30hCFzE',
+    'phone' => $phone,
+    'message' => 'Renew Plz',
+    'callback_url' => 'https://myserver.com.my/callback_receive'
 ];
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_POST, 1);
-curl_setopt($curl, CURLOPT_URL, 'https://sms.ala.my/api/v1/send');
+curl_setopt($curl, CURLOPT_URL, 'https://terminal.adasms.com/api/v1/send');
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_POSTFIELDS, $form_data);
 $result = curl_exec($curl);
@@ -27,4 +28,3 @@ $update_kariah = $pdo->prepare("UPDATE ahli_kariah SET status_sms=1 WHERE kariah
 $update_kariah->execute();
 
 header('Location: ahli-kariah.php');
-?>
